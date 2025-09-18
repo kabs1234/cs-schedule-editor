@@ -114,7 +114,7 @@ export default function ScheduleItem({
                 color: theme.palette.text.secondary,
               }}
             >
-              Длительность:
+              Duration:
             </Typography>
           </Box>
           <Chip
