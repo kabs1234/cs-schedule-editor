@@ -9,6 +9,7 @@ import {
   useTheme,
 } from '@mui/material';
 import type { ReactElement } from 'react';
+import { getDateDuration, getFormatDateTime } from '../../../utils/utils';
 
 export default function ScheduleItem({
   title,
@@ -74,7 +75,7 @@ export default function ScheduleItem({
                 color: theme.palette.text.primary,
               }}
             >
-              {startDate}
+              {getFormatDateTime(startDate)}
             </Typography>
             <Typography
               variant="body2"
@@ -92,7 +93,7 @@ export default function ScheduleItem({
                 color: theme.palette.text.primary,
               }}
             >
-              {endDate}
+              {getFormatDateTime(endDate)}
             </Typography>
           </Box>
         </Box>
@@ -114,7 +115,7 @@ export default function ScheduleItem({
                 color: theme.palette.text.secondary,
               }}
             >
-              Duration:
+              Duration: {getDateDuration(startDate, endDate)}
             </Typography>
           </Box>
           <Chip
