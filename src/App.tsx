@@ -1,7 +1,5 @@
+import IndexPage from './pages';
+
 export default function App() {
-  return (
-    <>
-      <p>hi</p>
-    </>
-  );
+  return <IndexPage />;
 }
