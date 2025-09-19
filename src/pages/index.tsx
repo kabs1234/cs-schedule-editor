@@ -1,8 +1,8 @@
 import { type ReactElement, useState } from 'react';
-import ScheduleList from '../components/app/ScheduleList/ScheduleList';
 import { Button } from '@mui/material';
 import CustomModal from '../components/ui/CustomModal/CustomModal';
 import AddScheduleForm from '../components/app/AddScheduleForm/AddScheduleForm';
+import Calendar from '../components/app/Calendar/Calendar';
 
 export default function IndexPage(): ReactElement {
   const [isScheduleModalOpen, setIsScheduleModalOpen] =
@@ -34,7 +34,7 @@ export default function IndexPage(): ReactElement {
         <AddScheduleForm />
       </CustomModal>
 
-      <ScheduleList />
+      <Calendar />
     </>
   );
 }

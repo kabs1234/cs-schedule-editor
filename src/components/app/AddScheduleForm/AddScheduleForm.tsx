@@ -1,23 +1,10 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  TextField,
-  ThemeProvider,
-  Typography,
-} from '@mui/material';
+import { Box, Button, FormControl, TextField, Typography } from '@mui/material';
 import type { ReactElement } from 'react';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form';
-import {
-  FIELD_REQUIRED_ERROR_MESSAGE,
-  MEDIA_QUERY_THEMES,
-} from '../../../const';
+import { FIELD_REQUIRED_ERROR_MESSAGE } from '../../../const';
 import { getObjectWithErrorMessage } from '../../../utils/utils';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import dayjs, { type Dayjs } from 'dayjs';
 
 export type FormType = z.infer<typeof formSchema>;
@@ -31,10 +18,6 @@ const formSchema = z.object({
 });
 
 export default function AddScheduleForm(): ReactElement {
-  const isResolutionDesktop = useMediaQuery(
-    MEDIA_QUERY_THEMES.breakpoints.up('desktop')
-  );
-
   const { control, handleSubmit } = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,84 +33,50 @@ export default function AddScheduleForm(): ReactElement {
   };
 
   return (
-    <ThemeProvider theme={MEDIA_QUERY_THEMES}>
-      <Box
+    <Box
+      sx={{
+        width: '300px',
+        padding: '10px 20px',
+      }}
+    >
+      <Typography
+        variant="h4"
+        component="h1"
         sx={{
-          width: '300px',
-          padding: '10px 20px',
+          marginBottom: 4,
+          backgroundClip: 'text',
+          textAlign: 'center',
+          fontWeight: 600,
+          letterSpacing: '0.5px',
         }}
       >
-        <Typography
-          variant="h4"
-          component="h1"
+        Form for adding schedule
+      </Typography>
+
+      <form onSubmit={handleSubmit(onValidForm)}>
+        <FormControl
           sx={{
-            marginBottom: 4,
-            backgroundClip: 'text',
-            textAlign: 'center',
-            fontWeight: 600,
-            letterSpacing: '0.5px',
+            '& .MuiFormControl-root:not(:last-child)': {
+              mb: '10px',
+            },
           }}
         >
-          Form for adding schedule
-        </Typography>
+          <Controller
+            name="title"
+            control={control}
+            render={({ field, fieldState: { error } }) => (
+              <TextField
+                {...field}
+                label="Title"
+                error={Boolean(error)}
+                helperText={error?.message}
+              />
+            )}
+          />
 
-        <form onSubmit={handleSubmit(onValidForm)}>
-          <FormControl
-            sx={{
-              '& .MuiFormControl-root:not(:last-child)': {
-                mb: '10px',
-              },
-            }}
-          >
-            <Controller
-              name="title"
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  {...field}
-                  label="Title"
-                  error={Boolean(error)}
-                  helperText={error?.message}
-                />
-              )}
-            />
-
-            <Controller
-              name="startDate"
-              control={control}
-              render={({ field }) => {
-                return isResolutionDesktop ? (
-                  <DateTimePicker {...field} label="Start date" ampm={false} />
-                ) : (
-                  <MobileDateTimePicker
-                    {...field}
-                    label="Start date"
-                    ampm={false}
-                  />
-                );
-              }}
-            />
-
-            <Controller
-              name="endDate"
-              control={control}
-              render={({ field }) => {
-                return isResolutionDesktop ? (
-                  <DateTimePicker {...field} label="End date" ampm={false} />
-                ) : (
-                  <MobileDateTimePicker
-                    {...field}
-                    label="End date"
-                    ampm={false}
-                  />
-                );
-              }}
-            />
-
-            <Button type="submit">Submit</Button>
-          </FormControl>
-        </form>
-      </Box>
-    </ThemeProvider>
+          <Button type="submit">Submit</Button>
+        </FormControl>
+      </form>
+    </Box>
   );
 }
